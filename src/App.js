@@ -23,7 +23,7 @@ class App extends Component {
     this.state = {
       alertVisible: false,
       title: '',
-      movies: []
+      lyricss: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -35,11 +35,11 @@ class App extends Component {
     this.setState({ alertVisible: false });
   }
 
-  getAllMovies = () => {
+  getalllyrics = () => {
     axios
-      .get('https://guarded-bayou-73178.herokuapp.com/getallmovies')
+      .get('https://guarded-bayou-73178.herokuapp.com/getalllyrics')
       .then(result => {
-        this.setState({ movies: result.data });
+        this.setState({ lyricss: result.data });
       })
       .catch(error => {
         console.log(error);
@@ -47,7 +47,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.getAllMovies();
+    this.getalllyrics();
   }
 
   //for form
@@ -55,9 +55,9 @@ class App extends Component {
     e.preventDefault();
     this.setState({ alertVisible: false });
 
-    const query = `https://guarded-bayou-73178.herokuapp.com/getmovie?title=${
+    const query = `https://guarded-bayou-73178.herokuapp.com/getlyrics?title=${
       this.state.title
-    }`;
+    }&artist=${this.state.artist}`;
 
     console.log(query);
 
@@ -82,17 +82,17 @@ class App extends Component {
     });
   }
 
-  removeMovie(title) {
+  removeLyrics(title) {
     this.setState({
-      movies: this.state.movies.filter(movie => {
-        if (movie.title !== title) return movie;
+      lyricss: this.state.lyricss.filter(lyrics => {
+        if (lyrics.title !== title) return lyrics;
       })
     });
-    const query = `https://guarded-bayou-73178.herokuapp.com/deletemovie?title=${title}`;
+    const query = `https://guarded-bayou-73178.herokuapp.com/removeLyrics?title=${title}`;
     axios
       .get(query)
       .then(result => {
-        this.getAllMovies();
+        this.getalllyrics();
       })
       .catch(error => {
         alert('Error: ', error);
@@ -100,10 +100,13 @@ class App extends Component {
   }
 
   render() {
-    let movieCards = this.state.movies.map(movie => {
+    let movieCards = this.state.lyricss.map(lyrics => {
       return (
-        <Col sm="4" key={movie.title}>
-          <MovieCard removeMovie={this.removeMovie.bind(this)} movie={movie} />
+        <Col sm="4" key={lyrics.title}>
+          <MovieCard
+            removeLyrics={this.removeLyrics.bind(this)}
+            lyrics={lyrics}
+          />
         </Col>
       );
     });
@@ -111,8 +114,8 @@ class App extends Component {
       <div className="App">
         <Container>
           <Jumbotron id="jumboheader">
-            <h1 className="display-4">Movie Search</h1>
-            <p className="lead">Search for movies</p>
+            <h1 className="display-4">Lyrics Search</h1>
+            <p className="lead">Search For Lyrics</p>
           </Jumbotron>
           <Row>
             <Col>
@@ -121,7 +124,7 @@ class App extends Component {
                 isOpen={this.state.alertVisible}
                 toggle={this.onDismiss}
               >
-                Movie not found
+                Lyrics not found
               </Alert>
             </Col>
           </Row>
@@ -129,16 +132,19 @@ class App extends Component {
             <Col>
               <Form onSubmit={this.onSubmit}>
                 <FormGroup>
-                  <Label for="title">Enter movie title</Label>
+                  <Label for="title">Enter Artist and Songs Name</Label>
                   <Input
-                    type="text"
-                    name="title"
-                    id="title"
-                    placeholder="enter movie title..."
+                    name="name"
+                    placeholder="Enter Artist Name Here..."
+                    onChange={this.onChange}
+                  />
+                  <Input
+                    title="title"
+                    placeholder="Songs Name Here..."
                     onChange={this.onChange}
                   />
                 </FormGroup>
-                <Button color="primary">Submit</Button>
+                <Button color="primary">Search</Button>
               </Form>
             </Col>
           </Row>
