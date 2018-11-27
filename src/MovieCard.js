@@ -16,19 +16,21 @@ export class MovieCard extends Component {
   }
 
   render() {
-    let { title, lyrics, link } = this.props.lyrics;
+    let { title, lyrics, link, artist, tubeimg } = this.props.lyrics;
     return (
       <div>
         <Card>
-          <CardImg top width="100%" src={title} alt="Card image cap" />
+          <CardImg top width="100%" src={tubeimg} alt={title} />
           <CardBody>
-            <CardTitle>{title}</CardTitle>
+            <CardTitle>
+              {artist} - {title}
+            </CardTitle>
             <CardSubtitle>{lyrics}</CardSubtitle>
-            <CardText>{link}</CardText>
+            <CardText>Youtube Link: {link}</CardText>
 
             <Button
               color="primary"
-              onClick={() => this.props.deletelyrics(title)}
+              onClick={() => this.props.removeLyrics(title)}
             >
               Delete
             </Button>

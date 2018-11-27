@@ -23,6 +23,7 @@ class App extends Component {
     this.state = {
       alertVisible: false,
       title: '',
+      artist: '',
       lyricss: []
     };
     this.onChange = this.onChange.bind(this);
@@ -59,7 +60,7 @@ class App extends Component {
       this.state.title
     }&artist=${this.state.artist}`;
 
-    console.log(query);
+    console.log('onsubmit:', query);
 
     axios
       .get(query)
@@ -68,7 +69,7 @@ class App extends Component {
         if (result.data === 'Not found') {
           this.setState({ alertVisible: true });
         }
-        this.getAllMovies();
+        this.getalllyrics();
       })
       .catch(error => {
         alert('Error: ', error);
@@ -78,8 +79,10 @@ class App extends Component {
   // for form field
   onChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.title]: e.target.value,
+      [e.target.artist]: e.target.value
     });
+    // console.log('onchange:', [e.target.title]);
   }
 
   removeLyrics(title) {
@@ -88,7 +91,7 @@ class App extends Component {
         if (lyrics.title !== title) return lyrics;
       })
     });
-    const query = `https://guarded-bayou-73178.herokuapp.com/removeLyrics?title=${title}`;
+    const query = `https://guarded-bayou-73178.herokuapp.com/deletelyrics?title=${title}`;
     axios
       .get(query)
       .then(result => {
@@ -134,7 +137,7 @@ class App extends Component {
                 <FormGroup>
                   <Label for="title">Enter Artist and Songs Name</Label>
                   <Input
-                    name="name"
+                    title="artist"
                     placeholder="Enter Artist Name Here..."
                     onChange={this.onChange}
                   />
