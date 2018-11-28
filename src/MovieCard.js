@@ -15,6 +15,10 @@ export class MovieCard extends Component {
     super(props);
   }
 
+  buttonHandler = () => {
+    window.open(this.props.lyrics.link);
+  };
+
   render() {
     let { title, lyrics, link, artist, tubeimg } = this.props.lyrics;
     return (
@@ -26,8 +30,11 @@ export class MovieCard extends Component {
               {artist} - {title}
             </CardTitle>
             <CardSubtitle>{lyrics}</CardSubtitle>
-            <CardText>Youtube Link: {link}</CardText>
-
+            <br />
+            <CardSubtitle>
+              <button onClick={this.buttonHandler}>Go To Youtube</button>
+            </CardSubtitle>
+            <br />
             <Button
               color="primary"
               onClick={() => this.props.removeLyrics(title)}
