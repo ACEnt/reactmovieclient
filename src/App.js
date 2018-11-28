@@ -115,11 +115,11 @@ class App extends Component {
     });
     return (
       <div className="App">
+        <Jumbotron id="jumboheader">
+          <h1 className="display-4 wordcolor">Lyrics Search</h1>
+          <p className="lead wordcolor">Search For Lyrics</p>
+        </Jumbotron>
         <Container>
-          <Jumbotron id="jumboheader">
-            <h1 className="display-4">Lyrics Search</h1>
-            <p className="lead">Search For Lyrics</p>
-          </Jumbotron>
           <Row>
             <Col>
               <Alert
@@ -154,6 +154,9 @@ class App extends Component {
           <p />
           <Row>{movieCards}</Row>
         </Container>
+        <footer className="footer">
+          <p>Copyright &copy; CGL Company. All Right Reserved.</p>
+        </footer>
       </div>
     );
   }

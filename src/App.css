@@ -33,5 +33,25 @@
 
 #jumboheader {
   height: 250px;
-  background-color: #4fc3f7;
+  background: url(http://img.greendayauthority.com/wallpaper/070113_billielyrics.jpg);
+}
+
+.wordcolor {
+  color: white;
+  font-size: 100px;
+  font-weight: 800;
+  font-family: sans-serif;
+}
+
+.footer {
+  background-color: rgb(71, 76, 77);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  bottom: 0;
+  margin-top: 15px;
+  color: white;
+}
+
+.footer > p {
+  margin-bottom: 0px !important;
 }
